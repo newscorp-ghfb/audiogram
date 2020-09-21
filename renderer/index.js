@@ -1,5 +1,5 @@
-var d3 = require("d3"),
-    patterns = require("./patterns.js"),
+// var d3 = require("d3"),
+var patterns = require("./patterns.js"),
     textWrapper = require("./text-wrapper.js");
 
 module.exports = function(t) {
@@ -24,6 +24,7 @@ module.exports = function(t) {
     theme.backgroundColor = theme.backgroundColor || "#fff";
     theme.waveColor = theme.waveColor || theme.foregroundColor || "#000";
     theme.captionColor = theme.captionColor || theme.foregroundColor || "#000";
+    theme.subtitleColor = theme.subtitleColor || theme.foregroundColor || "#000";
 
     // Default wave dimensions
     if (typeof theme.waveTop !== "number") theme.waveTop = 0;
@@ -51,7 +52,9 @@ module.exports = function(t) {
       context.drawImage(backgroundImage, 0, 0, theme.width, theme.height);
     }
 
-    patterns[theme.pattern || "wave"](context, options.waveform, theme);
+    if (!theme.noPattern) {
+      patterns[theme.pattern || "wave"](context, options.waveform, theme);
+    }
 
     // Write the caption
     if (options.caption) {

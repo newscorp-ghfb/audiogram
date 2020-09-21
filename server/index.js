@@ -84,10 +84,25 @@ app.post("/theme/upload/", [multer(newThemeFileOptions).single("newTheme"), func
       res.send(JSON.stringify({status: 500, error: err}));
     } else {
       var caption = req.body.newCaption;
+      var width = req.body.newWidth;
+      var height = req.body.newHeight;
       var themes = JSON.parse(data);
+      
       themes[caption] = {
-        "backgroundImage": req.file.filename
+        "backgroundImage": req.file.filename,
+        "width": parseInt(width),
+        "height": parseInt(height)
       };
+      
+      var subtitleLeft = (req.body.newSubtitleLeft) ? req.body.newSubtitleLeft : 0;
+      var subtitleRight = (req.body.newSubtitleRight) ? req.body.newSubtitleRight : 0;
+      if (subtitleLeft > 0) {
+        themes[caption]["subtitleLeft"] = parseInt(subtitleLeft);
+      }
+      if (subtitleRight > 0) {
+        themes[caption]["subtitleRight"] = parseInt(subtitleRight);
+      }
+      
       var jt = JSON.stringify(themes);
       fs.writeFile(themesFile, jt, "utf8", function (err) {
         if (err) {
@@ -139,6 +154,30 @@ app.post("/theme/delete/", jsonParser, function (req, res) {
       }
     }
   });
+});
+
+// Save theme
+app.post("/theme/save/", jsonParser, function (req, res) {
+  var themesFile = path.join(serverSettings.settingsPath, "themes.json");
+  fs.readFile(themesFile, "utf8", function readFileCallback(err, data) {
+    if (err) {
+      console.log('err', err);
+      res.send(JSON.stringify({status: 500, error: err}));
+    } else {
+      var theme = req.body.theme;
+      var themes = JSON.parse(data);
+      themes[theme.name] = theme;
+      var jt = JSON.stringify(themes);
+      fs.writeFile(themesFile, jt, "utf8", function (err) {
+        if (err) {
+          console.log(err);
+          res.send(JSON.stringify({status: 500, error: err}));
+        }
+        res.send(JSON.stringify({status: 200, success: "success"}));
+      });
+    }
+  });
+  
 });
 
 // Theme editor

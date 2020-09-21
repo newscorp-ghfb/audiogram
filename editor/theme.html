@@ -11,6 +11,9 @@
     <link href="/css/base.css" rel="stylesheet" type="text/css">
     <link href="/css/editor.css" rel="stylesheet" type="text/css">
     <link href="/fonts/fonts.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.es5.min.js"></script>
   </head>
   <body class="loading">
 
@@ -39,7 +42,7 @@
         </div>
 
         <div id="preview">
-          <div style="background-color: black;">
+          <div>
             <div id="canvas">
               <canvas width="640" height="360"></canvas>
               <div id="preview-label">Preview</div>
@@ -68,6 +71,30 @@
           </div>
         </div>
 
+        <div class="row form-row" id="row-font">
+          <label for="input-font">Font</label>
+          <select id="input-font" name="font"></select>
+        </div>
+
+        <div class="row form-row">
+          <div style="padding-bottom: 7px">No pattern</div>
+          <input type="checkbox" class="form-check-input" id="chkNoPattern">
+        </div>
+
+        <div class="row form-row">
+          <div style="padding-bottom: 10px">Caption color</div>
+          <div style="border: thin solid; max-width: 40px">
+            <div class="captionColorPicker"></div>
+          </div>
+        </div>
+
+        <div class="row form-row">
+          <div style="padding-bottom: 10px">Subtitle color</div>
+          <div style="border: thin solid; max-width: 40px">
+            <div class="subtitleColorPicker"></div>
+          </div>
+        </div>
+
         <div class="row form-row" style="padding: 20px 0 10px 0">
           <p>
             Please note: Theme assets can be only of png or jpeg file format
@@ -85,9 +112,11 @@
           </label>
           <input id="input-new-caption" name="new-caption" type="text" autocomplete="off" placeholder="Add a new theme name" />
         </div>
+
         <div class="row form-row">
           <button type="button" id="btn-new-theme" class="left"><i class="fa fa-arrow-circle-up"></i>Add</button>
         </div>
+        
         
 
       </div>
